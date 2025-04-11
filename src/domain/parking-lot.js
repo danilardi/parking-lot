@@ -12,7 +12,7 @@ class ParkingLot {
     }
 
     park(car) {
-        if (!car instanceof Car) {
+        if (!(car instanceof Car)) {
             return "Sorry, the vehicle is not valid";
         }
         if (this.isCarAlreadyParked(car)) {
@@ -32,10 +32,12 @@ class ParkingLot {
     unpark(ticket) {
         const car = this.#dataCars[ticket.ticketNumber];
         if (car) {
-            if(this.isLotFull()) {
-                this.notifyParkingLotIsAvailToAttendant();
-            } 
+            const wasFull = this.isLotFull();
             delete this.#dataCars[ticket.ticketNumber];
+            if (wasFull && !this.isLotFull()) {
+                this.notifyParkingLotIsAvailToAttendant();
+            }
+
             return car;
         }
         return "Your ticket is not valid";
@@ -51,10 +53,6 @@ class ParkingLot {
 
     subscribe(attendant) {
         this.observer.push(attendant);
-    }
-
-    unsubscribe(attendant) {
-        this.observer = this.observer.filter(observer => observer !== attendant);
     }
 
     notifyParkingLotIsFullToAttendant() {

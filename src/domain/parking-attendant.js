@@ -1,7 +1,7 @@
 const Car = require("./car");
 
 class ParkingAttendant {
-    constructor(parkingLotList = [], name = "") {
+    constructor(parkingLotList, name = "") {
         this.name = name;
         this.parkingLotList = parkingLotList;
         this.availParkingLots = parkingLotList;
